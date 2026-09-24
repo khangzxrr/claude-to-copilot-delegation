@@ -1,5 +1,7 @@
 # benchmark output: per-run working copies (with their own .git), raw Claude JSON, logs
 bench/results/
+# demo TUI recordings (bench/demo.py)
+bench/demo-runs/
 
 # runner state when trying the skill inside this repo
 .delegate/

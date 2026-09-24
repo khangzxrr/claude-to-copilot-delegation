@@ -50,7 +50,7 @@ def run_hidden_tests(task, work):
         target = work / "_hidden_tests"
         shutil.copytree(hidden, target)
         (target / "__init__.py").touch()
-        cmd = ["python3", "-m", "unittest", "discover", "-s", "_hidden_tests", "-t", "."]
+        cmd = ["python3", "-m", "unittest", "discover", "-v", "-s", "_hidden_tests", "-t", "."]
     else:
         target = work / ".hidden"
         shutil.copytree(hidden, target)

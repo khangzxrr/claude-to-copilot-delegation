@@ -693,6 +693,25 @@ hidden tests passed. Copilot's credits rose about 45%, and runs took longer.
 
 Details, per-run numbers, methodology and how to add tasks: [docs/benchmark.md](docs/benchmark.md).
 
+### Live demo: side by side
+
+`bench/demo.py` runs Claude alone and Claude + `/delegate` on the same task at the same time, in
+one terminal screen: Claude's turns and tokens as they happen, what Claude and Copilot are doing,
+and at the end Claude's cost and Copilot's cost (AI credits at $0.01 each; `--credit-usd` to change),
+with a bar comparison. When both runs finish, the screen switches to the result: every hidden
+acceptance test passed or failed per run, and the files each run wrote. Every run is recorded in
+`bench/demo-runs/`, and a replay calls no model.
+
+```sh
+pip install rich
+python3 bench/demo.py                          # live, spreadsheet task (~8 min)
+python3 bench/demo.py --task cron --modes alone force
+python3 bench/demo.py --replay --speed 4       # replay the latest recording, 4x faster
+```
+
+Keys: `v` switch between the result and the activity, `r` run again, `p` replay the latest
+recording, `q` quit (stops the runs).
+
 ## Development
 
 The runner has a test suite that needs no network and no Copilot account: a fake `copilot`
@@ -726,6 +745,7 @@ claude-to-copilot-delegation/
 ├── .github/workflows/tests.yml # CI: the suite on Python 3.10 and 3.12
 ├── bench/
 │   ├── run.py                  # benchmark harness: alone vs delegate
+│   ├── demo.py                 # live side-by-side demo TUI, with record and replay
 │   ├── tasks/<name>/repo/      # starting project + TASK.md
 │   ├── tasks/<name>/hidden/    # acceptance tests, never shown to agents
 │   └── results/<timestamp>/    # summary.md, results.json, each run's working copy
